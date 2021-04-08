@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+render()
+{
+  local template="$1"
+{
+cat <<EOS
+---
+index: $index
+descr: $descr
+full_descr: $full_descr
+display_name: $display_name
+EOS
+} | mustache $template
+}
+
+
+read -p 'Enter database index: ' index
+read -p 'Enter database descr: ' descr
+read -p 'Enter database full_descr: ' full_descr
+read -p 'Enter database display_name: ' display_name
+
+render "templates/database-entry.mustache" | pbcopy
+read -p "Run INSERT command on database"
+
+render "templates/partition.mustache" | pbcopy
+read -p "Run CREATE command on database"
+
+render "templates/xref-function.mustache" | pbcopy
+read -p "Modify xref_insert_trigger function"
