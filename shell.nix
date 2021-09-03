@@ -1,9 +1,8 @@
-let
-  sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs {};
-in
-pkgs.mkShell {
-  buildInputs = with pkgs; [
+{ pkgs ? import <nixpkgs> {} }:
+pkgs.devshell.mkShell {
+  motd = "";
+
+  packages = with pkgs; [
     mustache-go
   ];
 }
