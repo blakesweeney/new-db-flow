@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils = { url = "github:numtide/flake-utils"; inputs.nixpkgs.follows = "nixpkgs"; };
     devshell = { url = "github:numtide/devshell"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
@@ -11,10 +10,10 @@
   flake-utils.lib.eachDefaultSystem (
     system:
     let
-      pkgs = import nixpkgs { 
-        inherit system; 
+      pkgs = import nixpkgs {
+        inherit system;
         overlays = [
-          inputs.devshell.overlay
+          inputs.devshell.overlays.default
         ];
       };
     in
